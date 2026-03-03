@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Depoimentos | A Liga</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="img logos/3.png">
+</head>
+<body>
+
+  <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="img logos/3.png" alt="Logo">
+                <span class="logo-text">A LIGA EMPRESARIAL</span>
+            </a>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="depoimentos.html" class="active">Feedbacks</a></li> <li><a href="#" onclick="abrirModalContato(event)">Contato</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                </ul>
+                <a href="aplicacao.html" class="btn-nav">Assinar Agora</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="split-screen">
+        
+        <div class="split-left">
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 40px;">O que dizem os membros</h2>
+            
+            <div id="lista-depoimentos-site">
+                <p style="color:#666;">Carregando depoimentos...</p>
+            </div>
+        </div>
+
+        <div class="split-right">
+            <div class="form-legacy fade-up">
+                <h3 style="text-align: center; margin-bottom: 5px;">Deixe seu Legado</h3>
+                <p style="text-align: center; color: #666; margin-bottom: 25px; font-size: 0.9rem;">Compartilhe sua história com a Liga.</p>
+                
+                <form id="formDepoimento">
+                    
+                    <div class="upload-circle" onclick="document.getElementById('depoFoto').click()">
+                        <i class="fas fa-camera" id="iconCamera"></i>
+                        <img id="previewFoto" src="#" alt="Preview" style="display:none;">
+                    </div>
+                    <input type="file" id="depoFoto" accept="image/*" style="display: none;" onchange="previewImagem(this)">
+                    
+                    <input type="text" id="depoNome" class="input-dark" placeholder="Seu Nome Completo" required>
+                    <input type="text" id="depoEmpresa" class="input-dark" placeholder="Nome da sua Empresa" required>
+                    
+                    <select id="depoPlano" class="input-dark" style="height: 50px; cursor: pointer;">
+                        <option value="" disabled selected>Qual seu plano atual?</option>
+                        <option value="Start">Start (Até 30k)</option>
+                        <option value="Premium">Premium (+30k)</option>
+                        <option value="Contador ALPHA">Contador ALPHA</option>
+                    </select>
+
+                    <textarea id="depoMsg" rows="4" class="input-dark" placeholder="Escreva seu feedback aqui..." required></textarea>
+
+
+                    <div style="text-align: center; margin-bottom: 10px; color: #888; font-size: 0.8rem;">Sua Avaliação</div>
+                    <div class="rating-box">
+                        <input type="radio" name="star" id="star5" value="5"><label for="star5" class="fas fa-star"></label>
+                        <input type="radio" name="star" id="star4" value="4"><label for="star4" class="fas fa-star"></label>
+                        <input type="radio" name="star" id="star3" value="3"><label for="star3" class="fas fa-star"></label>
+                        <input type="radio" name="star" id="star2" value="2"><label for="star2" class="fas fa-star"></label>
+                        <input type="radio" name="star" id="star1" value="1"><label for="star1" class="fas fa-star"></label>
+                    </div>
+
+                    <button type="submit" class="btn-nav" style="width: 100%; border: none; cursor: pointer;">ENVIAR DEPOIMENTO</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                
+                <div class="footer-col">
+                    <h3>A Liga Empresarial</h3>
+                    <p class="footer-desc">
+                        A primeira aceleradora cristã do Brasil. Unindo fé, propósito e prosperidade para transformar empresários em líderes de legado.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Navegação</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="depoimentos.html">Feedbacks</a></li>
+                        <li><a href="aplicacao.html">Assinatura</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+    <h3>Fale Conosco</h3>
+    <ul class="footer-links">
+    <li>
+        <a href="https://wa.me/+5561920041269?text=Ol%C3%A1%2C%20tudo%20bem%3F%3F" target="_blank">WhatsApp</a>
+    </li>
+    
+    <li>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sigalearning@gmail.com&su=Contato%20pelo%20Site" target="_blank">E-mail</a>
+    </li>
+    
+    <li>
+        <a href="https://www.instagram.com/aligaempresarial/" target="_blank">Instagram</a>
+    </li>
+    
+    <li>
+        <a href="https://www.facebook.com/PROFJUNIORCARDOSO" target="_blank">Facebook</a>
+    </li>
+    
+    <li>
+        <a href="https://www.youtube.com/@aligaempresarial" target="_blank">YouTube</a>
+    </li>
+</ul>
+</div>
+
+                <div class="footer-col">
+                    <h3>Mais</h3>
+                    <ul class="footer-links">
+                        <li><a href="politica.html">Política de Privacidade</a></li>
+                        <li><a href="faq.html">Perguntas Frequentes</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 A Liga Empresarial. Todos os direitos reservados.</p>
+                <p>CNPJ: 44.953.007/0001-01</p>
+                <p>Desenvolvido por <a href="https://nextlayer-agencia.netlify.app" target="_blank" style="color: #007BFF; font-weight: bold; text-decoration: none;">Nextlayer</a></p>
+            </div>
+        </div>
+    </footer>
+
+
+    <div id="modalContato" class="modal-overlay">
+    <div class="modal-box center" style="max-width: 400px;">
+        <span class="close-modal" onclick="fecharModalContato()">&times;</span>
+        <h3 style="color: #ffffff !important; margin-bottom: 20px;">Entre em Contato</h3>
+        
+        <div class="contact-buttons">
+            <a href="https://wa.me/+5561920041269?text=Ol%C3%A1%2C%20tudo%20bem%3F%3F" target="_blank" class="btn-contact whatsapp">
+                <i class="fab fa-whatsapp"></i> Chamar no WhatsApp
+            </a>
+            
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sigalearning@gmail.com&su=Contato%20pelo%20Site" target="_blank" class="btn-contact email">
+                <i class="fas fa-envelope"></i> Enviar E-mail
+            </a>
+            
+            <a href="https://www.instagram.com/aligaempresarial/" target="_blank" class="btn-contact instagram">
+                <i class="fab fa-instagram"></i> Seguir no Instagram
+            </a>
+            
+            <a href="https://www.facebook.com/PROFJUNIORCARDOSO" target="_blank" class="btn-contact facebook">
+                <i class="fab fa-facebook-f"></i> Facebook
+            </a>
+            
+            <a href="https://www.youtube.com/@aligaempresarial" target="_blank" class="btn-contact youtube">
+                <i class="fab fa-youtube"></i> YouTube
+            </a>
+        </div>
+    </div>
+</div>
+
+<audio id="musicaSite" loop>
+    <source src="Img junior/WhatsApp Audio 2026-02-24 at 00.06.26.mpeg" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+</audio>
+
+<div class="music-btn" onclick="toggleMusic()">
+    <i id="musicIcon" class="fas fa-music"></i>
+    <div class="music-waves">
+        <span></span><span></span><span></span>
+    </div>
+</div>
+
+
+<div class="mobile-nav">
+    <a href="index.html" class="nav-item">
+        <i class="fas fa-home"></i>
+        <span>Início</span>
+    </a>
+    <a href="depoimentos.html" class="nav-item">
+        <i class="fas fa-star"></i>
+        <span>Feedbacks</span>
+    </a>
+    
+    <a href="aplicacao.html" class="nav-item highlight">
+        <i class="fas fa-file-contract"></i> 
+        <span>Assinatura</span>
+    </a>
+
+    <a href="sobre.html" class="nav-item">
+        <i class="fas fa-users"></i>
+        <span>Sobre</span>
+    </a>
+    
+    <a href="#" onclick="abrirModalContato(event)" class="nav-item">
+        <i class="fas fa-phone-alt"></i>
+        <span>Contato</span>
+    </a>
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

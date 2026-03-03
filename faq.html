@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | A Liga</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="img logos/3.png">
+    <style>
+        /* Estilo Específico do FAQ */
+        .faq-item { background: #111; margin-bottom: 15px; border-radius: 8px; border: 1px solid #222; overflow: hidden; }
+        .faq-question { padding: 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: white; transition: 0.3s; }
+        .faq-question:hover { background: #161616; color: var(--primary); }
+        .faq-answer { display: none; padding: 20px; border-top: 1px solid #222; color: #aaa; line-height: 1.6; }
+        .faq-item.active .faq-answer { display: block; }
+        .faq-item.active .faq-question { color: var(--primary); }
+        
+        /* Ajuste para as listas dentro das respostas */
+        .faq-answer ul, .faq-answer ol { margin-left: 20px; margin-top: 10px; margin-bottom: 10px; }
+        .faq-answer li { margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="img logos/3.png" alt="Logo">
+                <span class="logo-text">A LIGA EMPRESARIAL</span>
+            </a>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="depoimentos.html">Feedbacks</a></li>
+                    <li><a href="#" onclick="abrirModalContato(event)">Contato</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                </ul>
+                <a href="aplicacao.html" class="btn-nav">Assinar Agora</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container container-voltar">
+        <a href="index.html" class="btn-voltar-mobile">
+            <i class="fas fa-arrow-left"></i> Voltar para o Início
+        </a>
+    </div>
+
+    <section class="section-dark" style="padding-top: 150px; min-height: 80vh;">
+        <div class="container" style="max-width: 800px;">
+            <div class="section-header center">
+                <h2 style="color: white; font-family: 'Playfair Display', serif;">Perguntas Frequentes</h2>
+                <p style="color: var(--gold); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">Liga Empresarial & Contador Alpha</p>
+            </div>
+
+            <div class="faq-list" style="margin-top: 50px;">
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">1. O que é a Liga Empresarial? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        A Liga Empresarial é uma aceleradora empresarial cristã com DNA educacional.<br><br>
+                        Ela conecta empresários que desejam crescer com método, ambiente estratégico e princípios sólidos.<br><br>
+                        Aqui você aprende, aplica e cresce todos os meses.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">2. A Liga é uma comunidade evangélica? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        Não.<br><br>
+                        A Liga é uma comunidade empresarial cristã aberta a todos que acreditam em Cristo e desejam prosperar com propósito — independentemente de denominação, religião ou histórico.<br><br>
+                        O foco é crescimento com princípios.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">3. O que diferencia a Liga de outros grupos de networking? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        A Liga não é um grupo de indicações. É um sistema de crescimento estruturado com:
+                        <ul>
+                            <li>Trilha educacional</li>
+                            <li>Método Semente</li>
+                            <li>Eventos estratégicos</li>
+                            <li>Conselho empresarial</li>
+                            <li>Metas e acompanhamento</li>
+                        </ul>
+                        Networking aqui é consequência do ambiente certo.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">4. Eu realmente vou ter resultado? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        Resultado depende de aplicação. Mas quem participa ativamente costuma perceber:
+                        <ul>
+                            <li>Novas conexões</li>
+                            <li>Novas oportunidades</li>
+                            <li>Crescimento de faturamento</li>
+                            <li>Mais clareza estratégica</li>
+                            <li>Ambiente que acelera decisões</li>
+                        </ul>
+                        A Liga entrega método e ambiente. Você aplica e colhe.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">5. O que significa "Trilha do Conhecimento"? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        É o método educacional da Liga. Todo mês trabalhamos conteúdos do básico ao avançado em:
+                        <ul>
+                            <li>Finanças</li>
+                            <li>Gestão</li>
+                            <li>Liderança</li>
+                            <li>Vendas</li>
+                            <li>Mentalidade</li>
+                            <li>Estratégia</li>
+                        </ul>
+                        É crescimento contínuo e estruturado.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">6. O que é o Método Semente? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        É a cultura prática da Liga. Cada membro é incentivado a:
+                        <ul>
+                            <li>Servir</li>
+                            <li>Indicar</li>
+                            <li>Conectar</li>
+                            <li>Expandir</li>
+                            <li>Gerar alianças</li>
+                        </ul>
+                        Crescimento coletivo gera prosperidade individual.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">7. A Liga serve para quem está começando? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        Sim.<br><br>
+                        Temos a modalidade Liga Start, ideal para empresários iniciantes ou MEI que querem estrutura, ambiente e direção.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">8. A Liga também serve para empresários mais experientes? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        Sim. Empresários maiores encontram:
+                        <ul>
+                            <li>Ambiente estratégico</li>
+                            <li>Conselho empresarial</li>
+                            <li>Networking qualificado</li>
+                            <li>Expansão de oportunidades</li>
+                            <li>Novas fontes de receita</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">9. O que é o Contador Alpha? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        O Contador Alpha é um conselho premium de contadores selecionados.<br><br>
+                        É um ambiente fechado onde contadores:
+                        <ul>
+                            <li>Resolvem problemas reais juntos</li>
+                            <li>Aprendem com erros e acertos uns dos outros</li>
+                            <li>Recebem mentoria direta</li>
+                            <li>Criam novas fontes de renda</li>
+                            <li>Expandem sua atuação</li>
+                        </ul>
+                        É crescimento acelerado para contabilidades.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">10. Qual o maior diferencial do Contador Alpha? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        Você deixa de crescer sozinho.<br><br>
+                        Você senta na mesa com outras contabilidades, compartilha desafios reais e recebe solução prática.<br><br>
+                        Errar menos acelera lucro.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">11. O Contador Alpha realmente aumenta o faturamento? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        Sim, por três caminhos:
+                        <ul>
+                            <li>Crescimento técnico e estratégico</li>
+                            <li>Expansão do cliente (cliente cresce → contador cresce)</li>
+                            <li>Novas fontes de renda (Liga, domicílio fiscal, certificados, parcerias)</li>
+                        </ul>
+                        É crescimento estruturado.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">12. Como o Contador Alpha gera novas fontes de renda? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        O contador pode:
+                        <ul>
+                            <li>Ganhar recorrência da Liga Start</li>
+                            <li>Receber comissão da Liga Premium</li>
+                            <li>Ganhar bonificação por domicílio fiscal</li>
+                            <li>Ganhar comissão por certificado digital</li>
+                            <li>Fortalecer sua autoridade</li>
+                        </ul>
+                        É diversificação com o mesmo cliente.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">13. Existe contrato no Contador Alpha? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        Sim.<br><br>
+                        Porque crescimento exige compromisso.<br><br>
+                        São 6 meses de ciclo estratégico para gerar resultado real.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">14. É obrigatório indicar clientes? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        Sim, existe meta mínima.<br><br>
+                        Porque ambiente é troca. Não é só absorver — é contribuir.<br><br>
+                        Quem contribui mais, cresce mais.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">15. E se eu não cumprir as metas? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        O projeto é baseado em responsabilidade.<br><br>
+                        Quem não aplica o método pode sair do programa, pois o objetivo é manter um ambiente de alto desempenho.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">16. A Liga é só sobre dinheiro? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        Não.<br><br>
+                        Na Liga seguimos uma ordem:
+                        <ol>
+                            <li>Deus</li>
+                            <li>Família</li>
+                            <li>Mente</li>
+                            <li>Corpo</li>
+                            <li>Bolso</li>
+                        </ol>
+                        O dinheiro é consequência do alinhamento.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">17. Qual é o perfil ideal de membro? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        Empresários que:
+                        <ul>
+                            <li>Querem crescer</li>
+                            <li>São responsáveis</li>
+                            <li>Respeitam ambiente</li>
+                            <li>Aplicam o que aprendem</li>
+                            <li>Valorizam princípios</li>
+                        </ul>
+                        A Liga não é para curiosos. É para comprometidos.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">18. O que é o Xeque-Mate? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        É um encontro estratégico onde empresários:
+                        <ul>
+                            <li>Aprendem sobre ambiente e cultura</li>
+                            <li>Treinam pitch</li>
+                            <li>Fazem conexões reais</li>
+                            <li>Fecham contratos</li>
+                            <li>Resolvem problemas</li>
+                        </ul>
+                        É decisão empresarial em ambiente certo.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">19. Vale a pena financeiramente? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        Se você aplicar, sim. Muitos membros conseguem:
+                        <ul>
+                            <li>Novos contratos</li>
+                            <li>Novas parcerias</li>
+                            <li>Expansão de clientes</li>
+                            <li>Novas fontes de receita</li>
+                            <li>Crescimento estratégico</li>
+                        </ul>
+                        ROI é consequência de envolvimento.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">20. Se eu não entrar, o que eu perco? <i class="fas fa-chevron-down"></i></div>
+                    <div class="faq-answer">
+                        Você continuará crescendo sozinho. E crescer sozinho é:
+                        <ul>
+                            <li>Errar mais</li>
+                            <li>Demorar mais</li>
+                            <li>Cansar mais</li>
+                            <li>Desperdiçar oportunidades</li>
+                        </ul>
+                        Ambiente acelera destino.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                
+                <div class="footer-col">
+                    <h3>A Liga Empresarial</h3>
+                    <p class="footer-desc">
+                        A primeira aceleradora cristã do Brasil. Unindo fé, propósito e prosperidade para transformar empresários em líderes de legado.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Navegação</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="depoimentos.html">Feedbacks</a></li>
+                        <li><a href="aplicacao.html">Assinatura</a></li>
+                    </ul>
+                </div>
+
+               <div class="footer-col">
+                    <h3>Fale Conosco</h3>
+                    <ul class="footer-links">
+                        <li>
+                            <a href="https://wa.me/+5561920041269?text=Ol%C3%A1%2C%20tudo%20bem%3F%3F" target="_blank">WhatsApp</a>
+                        </li>
+                        <li>
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sigalearning@gmail.com&su=Contato%20pelo%20Site" target="_blank">E-mail</a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/aligaempresarial/" target="_blank">Instagram</a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/PROFJUNIORCARDOSO" target="_blank">Facebook</a>
+                        </li>
+                        <li>
+                            <a href="https://www.youtube.com/@aligaempresarial" target="_blank">YouTube</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Mais</h3>
+                    <ul class="footer-links">
+                        <li><a href="politica.html">Política de Privacidade</a></li>
+                        <li><a href="faq.html">Perguntas Frequentes</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 A Liga Empresarial. Todos os direitos reservados.</p>
+                <p>CNPJ: 44.953.007/0001-01</p>
+                <p>Desenvolvido por <a href="https://nextlayer-agencia.netlify.app" target="_blank" style="color: #007BFF; font-weight: bold; text-decoration: none;">Nextlayer</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="modalContato" class="modal-overlay">
+        <div class="modal-box center" style="max-width: 400px;">
+            <span class="close-modal" onclick="fecharModalContato()">&times;</span>
+            <h3 style="color: #ffffff !important; margin-bottom: 20px;">Entre em Contato</h3>
+            
+            <div class="contact-buttons">
+                <a href="https://wa.me/+5561920041269?text=Ol%C3%A1%2C%20tudo%20bem%3F%3F" target="_blank" class="btn-contact whatsapp">
+                    <i class="fab fa-whatsapp"></i> Chamar no WhatsApp
+                </a>
+                
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sigalearning@gmail.com&su=Contato%20pelo%20Site" target="_blank" class="btn-contact email">
+                    <i class="fas fa-envelope"></i> Enviar E-mail
+                </a>
+                
+                <a href="https://www.instagram.com/aligaempresarial/" target="_blank" class="btn-contact instagram">
+                    <i class="fab fa-instagram"></i> Seguir no Instagram
+                </a>
+                
+                <a href="https://www.facebook.com/PROFJUNIORCARDOSO" target="_blank" class="btn-contact facebook">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </a>
+                
+                <a href="https://www.youtube.com/@aligaempresarial" target="_blank" class="btn-contact youtube">
+                    <i class="fab fa-youtube"></i> YouTube
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fas fa-home"></i>
+            <span>Início</span>
+        </a>
+        <a href="depoimentos.html" class="nav-item">
+            <i class="fas fa-star"></i>
+            <span>Feedbacks</span>
+        </a>
+        <a href="aplicacao.html" class="nav-item highlight">
+            <i class="fas fa-file-contract"></i>
+            <span>Assinatura</span>
+        </a>
+        <a href="sobre.html" class="nav-item">
+            <i class="fas fa-users"></i>
+            <span>Sobre</span>
+        </a>
+        <a href="#" onclick="abrirModalContato(event)" class="nav-item">
+            <i class="fas fa-phone-alt"></i>
+            <span>Contato</span>
+        </a>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+        function toggleFAQ(element) {
+            element.parentElement.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>

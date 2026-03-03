@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Admin | A Liga</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/painel.css">
+    <link rel="icon" type="image/x-icon" href="/img logos/3.png">
+</head>
+<body>
+
+    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+    <div class="mobile-header">
+        <i class="fas fa-bars" onclick="toggleSidebar()"></i>
+        <img src="/img logos/3.png" alt="Logo">
+        <div style="width: 24px;"></div> 
+    </div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="/img logos/3.png" alt="Logo" style="height: 40px;">
+            <span>PAINEL DE CONTROLE</span>
+            <i class="fas fa-times close-sidebar-btn" onclick="toggleSidebar()"></i>
+        </div>
+        <ul class="menu">
+            <li class="active" onclick="mudarAba('dashboard'); toggleSidebar()"><i class="fas fa-chart-line"></i> Visão Geral</li>
+            <li onclick="mudarAba('aplicacoes'); toggleSidebar()"><i class="fas fa-users"></i> Membros</li>
+            <li onclick="mudarAba('cases'); toggleSidebar()"><i class="fas fa-star"></i> Histórias</li>
+            <li onclick="mudarAba('feedbacks'); toggleSidebar()"><i class="fas fa-comments"></i> Feedbacks</li>
+        </ul>
+        <div class="sidebar-footer">
+            <li onclick="logout()" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Sair</li>
+        </div>
+    </div>
+
+    <div class="main-content">
+        
+        <div id="aba-dashboard" class="aba">
+            <div class="header-flex">
+                <div class="header-title">
+                    <h2>Visão Geral</h2>
+                    <p>Crescimento mensal.</p>
+                </div>
+                <select id="filtroAnoGraph" onchange="carregarDashboard()" class="select-year"></select>
+            </div>
+            
+            <div class="kpi-grid">
+                <div class="kpi-card" style="border-top: 4px solid #0044cc;">
+                    <h3><span class="dot-color" style="background:#0044cc;"></span> Total</h3>
+                    <span id="kpi-total">0</span>
+                </div>
+                <div class="kpi-card" style="border-top: 4px solid #FFD700;">
+                    <h3><span class="dot-color" style="background:#FFD700;"></span> Start</h3>
+                    <span id="kpi-start">0</span>
+                </div>
+                <div class="kpi-card" style="border-top: 4px solid #a0a0a0;">
+                    <h3><span class="dot-color" style="background:#a0a0a0;"></span> Premium</h3>
+                    <span id="kpi-premium">0</span>
+                </div>
+                <div class="kpi-card" style="border-top: 4px solid #00ff00;">
+                    <h3><span class="dot-color" style="background:#00ff00;"></span> Alpha</h3>
+                    <span id="kpi-alpha">0</span>
+                </div>
+            </div>
+            <div class="chart-box">
+                <canvas id="graficoOnda"></canvas>
+            </div>
+            <p>Desenvolvido por <a href="https://nextlayer-agencia.netlify.app" target="_blank" style="color: #007BFF; font-weight: bold; text-decoration: none;">Nextlayer</a></p>
+        </div>
+
+        <div id="aba-aplicacoes" class="aba" style="display:none;">
+            <div class="header-title">
+                <h2>Membros</h2>
+            </div>
+            <div class="filter-bar">
+                <label>Data:</label>
+                <input type="date" id="filtroDataMembros" onchange="carregarAplicacoes()">
+                <button onclick="limparFiltroMembros()" class="btn-ghost-sm">Limpar</button>
+            </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Nome</th>
+                            <th>Faturamento</th>
+                            <th>Plano</th>
+                            <th>Objetivo</th> <th>Contato</th> 
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lista-aplicacoes"></tbody>
+                </table>
+            </div>
+            <p>Desenvolvido por <a href="https://nextlayer-agencia.netlify.app" target="_blank" style="color: #007BFF; font-weight: bold; text-decoration: none;">Nextlayer</a></p>
+        </div>
+
+        <div id="aba-cases" class="aba" style="display:none;">
+            <div class="header-flex">
+                <div class="header-title"><h2>Histórias de Sucesso</h2></div>
+                <button class="btn-new" onclick="abrirModalCase()">+ Nova História</button>
+            </div>
+            <div id="lista-cases" class="cards-grid"></div>
+            <p>Desenvolvido por <a href="https://nextlayer-agencia.netlify.app" target="_blank" style="color: #007BFF; font-weight: bold; text-decoration: none;">Nextlayer</a></p>
+        </div>
+
+        <div id="aba-feedbacks" class="aba" style="display:none;">
+            <div class="header-title"><h2>Depoimentos</h2></div>
+            <div class="filter-bar">
+                <label>Data:</label>
+                <input type="date" id="filtroDataFeed" onchange="carregarFeedbacks()">
+                <button onclick="limparFiltroFeed()" class="btn-ghost-sm">Limpar</button>
+            </div>
+            <div id="lista-feedbacks" class="feed-list-compact"></div>
+            <p>Desenvolvido por <a href="https://nextlayer-agencia.netlify.app" target="_blank" style="color: #007BFF; font-weight: bold; text-decoration: none;">Nextlayer</a></p>
+        </div>
+
+    </div>
+
+    <div id="modalMembro" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Detalhes do Membro</h3>
+                <div class="close-btn-circle" onclick="document.getElementById('modalMembro').style.display='none'">&times;</div>
+            </div>
+            <div class="modal-body" id="corpoModalMembro" style="color: #ccc; line-height: 1.6;">
+                </div>
+            <div class="modal-footer" id="footerModalMembro">
+                </div>
+        </div>
+    </div>
+
+    <div id="modalCase" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 id="modalTitulo">História</h3>
+                <div class="close-btn-circle" onclick="fecharModalCase()">&times;</div>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="caseId">
+                <div class="input-group">
+                    <label>Nome</label>
+                    <input type="text" id="caseNome">
+                </div>
+                <div class="input-group">
+                    <label>Subtítulo</label>
+                    <input type="text" id="caseSub">
+                </div>
+                <div class="input-group">
+                    <label>História</label>
+                    <textarea id="caseHist" rows="4"></textarea>
+                </div>
+                <div class="upload-area" onclick="document.getElementById('caseFotoInput').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span id="uploadText">Clique para alterar a foto</span>
+                    <input type="file" id="caseFotoInput" accept="image/*" onchange="previewImagem(event)" style="display:none;">
+                    <img id="imgPreview" src="" style="display:none; width: 100%; height: 200px; object-fit: cover; margin-top: 10px; border-radius: 8px;">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="btnExcluirCase" onclick="deletarCaseAtual()" class="btn-delete-modal" style="display:none;">Excluir</button>
+                <div style="flex:1;"></div>
+                <button onclick="salvarCase()" class="btn-primary" id="btnSalvarCase">Salvar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalFeed" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Detalhes</h3>
+                <div class="close-btn-circle" onclick="document.getElementById('modalFeed').style.display='none'">&times;</div>
+            </div>
+            <div class="modal-body" id="modalFeedBody"></div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

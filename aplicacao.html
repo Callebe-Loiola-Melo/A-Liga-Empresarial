@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplicação | A Liga</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="img logos/3.png">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="img logos/3.png" alt="Logo">
+                <span class="logo-text">A LIGA EMPRESARIAL</span>
+            </a>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="depoimentos.html">Feedbacks</a></li>
+                    <li><a href="#" onclick="abrirModalContato(event)">Contato</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                </ul>
+                <a href="aplicacao.html" class="btn-nav active">Assinar Agora</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="split-screen" style="display: flex; align-items: center; justify-content: center; padding: 120px 20px;">
+        <div class="form-legacy fade-up" style="max-width: 700px;">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem;">Ficha de Assinatura</h2>
+                <p style="color: #666;">Preencha para assinar o plano que mais te interessou</p>
+            </div>
+
+            <form id="formAplicacao">
+                <input type="text" id="appNome" class="input-dark" placeholder="Nome Completo" required>
+                <input type="tel" id="appZap" class="input-dark" placeholder="Número (com DDD)" required>
+                
+                <div class="form-row-dual">
+                    <input type="text" id="appEmpresa" class="input-dark" placeholder="Nome da Empresa" required>
+                    <input type="text" id="appSegmento" class="input-dark" placeholder="Segmento da Empresa" required>
+                </div>
+
+                <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 10px; margin-top: 20px;">Escolha um plano</p>
+
+                <div class="option-grid three-cols planos-selector">
+                    <label class="option-card">
+                        <input type="radio" name="plano" value="Start" id="opt-start" onchange="verificarPlano()">
+                        <div class="option-box">
+                            <h4>START</h4>
+                            <span>Até 30k</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="plano" value="Premium" id="opt-premium" onchange="verificarPlano()">
+                        <div class="option-box">
+                            <h4>PREMIUM</h4>
+                            <span>+30k (Conselho)</span>
+                        </div>
+                    </label>
+
+                    <label class="option-card">
+                        <input type="radio" name="plano" value="Contador Alpha" id="opt-alpha" onchange="verificarPlano()">
+                        <div class="option-box">
+                            <h4>CONTADOR ALPHA</h4>
+                            <span>Para Contadores</span>
+                        </div>
+                    </label>
+                </div>
+
+                <div id="containerFaturamento" style="display: none; margin-top: 20px;">
+                    <p style="color: #aaa; font-size: 0.9rem; margin-bottom: 10px;">Faturamento Mensal Atual</p>
+                    <div class="option-grid three-cols">
+                        <label class="option-card">
+                            <input type="radio" name="faturamento" value="Até 30k">
+                            <div class="option-box">
+                                <h4>Até 30k</h4>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="faturamento" value="+30k">
+                            <div class="option-box">
+                                <h4>+30k</h4>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="radio" name="faturamento" value="+100k">
+                            <div class="option-box">
+                                <h4>+100k</h4>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <textarea id="appObjetivo" rows="3" class="input-dark" placeholder="Qual seu maior desafio hoje?" style="margin-top: 20px;"></textarea>
+
+                <button type="submit" class="btn-hero" style="width: 100%; border: none; cursor: pointer; font-size: 0.9rem; margin-top: 20px;">Assinar</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                
+                <div class="footer-col">
+                    <h3>A Liga Empresarial</h3>
+                    <p class="footer-desc">
+                        A primeira aceleradora cristã do Brasil. Unindo fé, propósito e prosperidade para transformar empresários em líderes de legado.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Navegação</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="depoimentos.html">Feedbacks</a></li>
+                        <li><a href="aplicacao.html">Assinatura</a></li>
+                    </ul>
+                </div>
+
+               <div class="footer-col">
+                    <h3>Fale Conosco</h3>
+                    <ul class="footer-links">
+                        <li>
+                            <a href="https://wa.me/+5561920041269?text=Ol%C3%A1%2C%20tudo%20bem%3F%3F" target="_blank">WhatsApp</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sigalearning@gmail.com&su=Contato%20pelo%20Site" target="_blank">E-mail</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.instagram.com/aligaempresarial/" target="_blank">Instagram</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.facebook.com/PROFJUNIORCARDOSO" target="_blank">Facebook</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.youtube.com/@aligaempresarial" target="_blank">YouTube</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Mais</h3>
+                    <ul class="footer-links">
+                        <li><a href="politica.html">Política de Privacidade</a></li>
+                        <li><a href="faq.html">Perguntas Frequentes</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 A Liga Empresarial. Todos os direitos reservados.</p>
+                <p>CNPJ: 44.953.007/0001-01</p>
+                <p>Desenvolvido por <a href="https://nextlayer-agencia.netlify.app" target="_blank" style="color: #007BFF; font-weight: bold; text-decoration: none;">Nextlayer</a></p>
+            </div>
+        </div>
+    </footer>
+
+   <div id="modalContato" class="modal-overlay">
+    <div class="modal-box center" style="max-width: 400px;">
+        <span class="close-modal" onclick="fecharModalContato()">&times;</span>
+        <h3 style="color: #ffffff !important; margin-bottom: 20px;">Entre em Contato</h3>
+        
+        <div class="contact-buttons">
+            <a href="https://wa.me/+5561920041269?text=Ol%C3%A1%2C%20tudo%20bem%3F%3F" target="_blank" class="btn-contact whatsapp">
+                <i class="fab fa-whatsapp"></i> Chamar no WhatsApp
+            </a>
+            
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sigalearning@gmail.com&su=Contato%20pelo%20Site" target="_blank" class="btn-contact email">
+                <i class="fas fa-envelope"></i> Enviar E-mail
+            </a>
+            
+            <a href="https://www.instagram.com/aligaempresarial/" target="_blank" class="btn-contact instagram">
+                <i class="fab fa-instagram"></i> Seguir no Instagram
+            </a>
+            
+            <a href="https://www.facebook.com/PROFJUNIORCARDOSO" target="_blank" class="btn-contact facebook">
+                <i class="fab fa-facebook-f"></i> Facebook
+            </a>
+            
+            <a href="https://www.youtube.com/@aligaempresarial" target="_blank" class="btn-contact youtube">
+                <i class="fab fa-youtube"></i> YouTube
+            </a>
+        </div>
+    </div>
+</div>
+
+<audio id="musicaSite" loop>
+    <source src="Img junior/WhatsApp Audio 2026-02-24 at 00.06.26.mpeg" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+</audio>
+
+<div class="music-btn" onclick="toggleMusic()">
+    <i id="musicIcon" class="fas fa-music"></i>
+    <div class="music-waves">
+        <span></span><span></span><span></span>
+    </div>
+</div>
+
+
+<div class="mobile-nav">
+    <a href="index.html" class="nav-item">
+        <i class="fas fa-home"></i>
+        <span>Início</span>
+    </a>
+    <a href="depoimentos.html" class="nav-item">
+        <i class="fas fa-star"></i>
+        <span>Feedbacks</span>
+    </a>
+    
+    <a href="aplicacao.html" class="nav-item highlight">
+        <i class="fas fa-file-contract"></i> 
+        <span>Assinatura</span>
+    </a>
+
+    <a href="sobre.html" class="nav-item">
+        <i class="fas fa-users"></i>
+        <span>Sobre</span>
+    </a>
+    
+    <a href="#" onclick="abrirModalContato(event)" class="nav-item">
+        <i class="fas fa-phone-alt"></i>
+        <span>Contato</span>
+    </a>
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

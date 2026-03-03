@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre Nós | A Liga Empresarial</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/x-icon" href="img logos/3.png">
+    
+    <style>
+        .bio-images {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Foto Principal com Fade-out */
+        .bio-main-img {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        
+        .bio-main-img img {
+            width: 100%;
+            display: block;
+            filter: grayscale(10%);
+            transition: 0.3s;
+        }
+        
+        /* O Segredo: Degradê Preto no Final da Foto */
+        .bio-main-img::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40%; /* Altura do sumiço */
+            background: linear-gradient(to bottom, rgba(5, 5, 5, 0) 0%, rgba(5, 5, 5, 1) 100%);
+            z-index: 1;
+        }
+
+        /* Efeito de Destaque no Hover (Opcional, pode remover se preferir) */
+        .bio-main-img:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.02);
+        }
+
+        /* Logo Flutuante (Mantido da estrutura original) */
+        .bio-logo-float {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            background: black;
+            border: 2px solid #d4af37; /* var(--gold) */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        
+        .bio-logo-float img {
+            width: 60%;
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .bio-logo-float {
+                width: 70px;
+                height: 70px;
+                bottom: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="img logos/3.png" alt="Logo">
+                <span class="logo-text">A LIGA EMPRESARIAL</span>
+            </a>
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="depoimentos.html">Feedbacks</a></li>
+                    <li><a href="#" onclick="abrirModalContato(event)">Contato</a></li>
+                    <li><a href="sobre.html" class="active">Sobre</a></li>
+                </ul>
+                <a href="aplicacao.html" class="btn-nav">Assinar Agora</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-sobre section-blue-gradient" style="padding-top: 150px; padding-bottom: 80px;">
+        <div class="container center fade-up">
+            <h1 style="font-family: 'Playfair Display', serif; font-size: 3.5rem;">Sobre Nós</h1>
+            <p style="color: #ccc; margin-top: 20px; max-width: 700px; margin-left: auto; margin-right: auto;">
+                Acelerando negócios e transformando empresários em líderes de legado, equilibrando fé, propósito e prosperidade.
+            </p>
+        </div>
+    </section>
+
+    <section class="bio section-dark" style="padding-top: 50px;">
+        <div class="container">
+            <div class="grid-2">
+                
+                <div class="bio-images fade-up">
+                    <div class="bio-main-img">
+                        <img src="Img junior/foto familia.png"Professor Júnior Cardoso">
+                    </div>
+                </div>
+
+                <div class="bio-text fade-up delay-100">
+                    <h2 style="color:#d4af37; font-size:1.1rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:10px;">Biografia</h2>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 2.8rem; line-height: 1.1; color: white;">PROF. JÚNIOR CARDOSO</h3>
+                    
+                    <p style="color:#666; font-weight:700; margin-top:5px; margin-bottom: 25px;">Acelerador de Empresas, Mentor e Conselheiro de Negócios</p>
+                    
+                    <p style="color: #ccc; line-height: 1.7; margin-bottom: 15px; font-size: 1.05rem;">
+                        Especialista em destravar o crescimento de negócios nas áreas de Estratégia, Marketing, Vendas, Liderança e Finanças. Júnior Cardoso não é apenas um teórico, é um treinador mental e um "mão na massa" que vive os desafios que ensina.
+                    </p>
+                    
+                    <p style="color: #ccc; line-height: 1.7; margin-bottom: 25px; font-size: 1.05rem;">
+                        Com uma metodologia focada em dados (IR - Informação para Resultado), Júnior auxilia empresários a saírem do operacional e assumirem o controle estratégico. Seu compromisso é formar líderes resilientes, capazes de suportar o peso do sucesso mantendo os princípios da fé cristã.
+                    </p>
+                    
+                    <div class="stats-row">
+                        <div class="stat">
+                            <h3>+15 ANOS</h3>
+                            <p>Experiência em Aceleração</p>
+                        </div>
+                        <div class="stat">
+                            <h3>+5 LIVROS</h3>
+                            <p>Livros Coautorados</p>
+                        </div>
+                        <div class="stat">
+                            <h3>+10 MIL</h3>
+                            <p>Empresários Mentorados</p>
+                        </div>
+                        <div class="stat">
+                            <h3>+50</h3>
+                            <p>Empresas Aceleradas</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="conheca-a-liga" class="section-dark" style="padding-top: 100px; padding-bottom: 100px; border-top: 1px solid #111;">
+        <div class="container">
+            <div class="grid-2" style="align-items: flex-start;">
+                
+                <div class="bio-text fade-up">
+                    <h2 style="color:#d4af37; font-size:1.1rem; text-transform:uppercase; letter-spacing:2px; margin-bottom:10px;">Nosso Propósito</h2>
+                    <h3 style="font-family: 'Playfair Display', serif; font-size: 2.8rem; line-height: 1.1; color: white;">O QUE É A LIGA?</h3>
+                    
+                    <p style="color: #ccc; line-height: 1.7; margin-top: 25px; margin-bottom: 15px; font-size: 1.05rem;">A Liga Empresarial é a primeira aceleradora cristã de empresários do Brasil, criada para unir fé, propósito e prosperidade em um só movimento. </p>
+                    
+
+                    <p style="color: #ccc; line-height: 1.7; margin-top: 25px; margin-bottom: 15px; font-size: 1.05rem;">
+                        Mais que uma comunidade, A LIGA EMPRESARIAL é uma escola de crescimento e um campo de batalha para empresários que decidiram prosperar com propósito.
+                    </p>
+
+
+                    <p style="color: #ccc; line-height: 1.7; margin-bottom: 30px; font-size: 1.05rem;">
+                        Aqui cada empresário aprende a ganhar mais, trabalhar menos para ter mais tempo para, Deus, família e ter varias fontes de renda, sem perder o foco no que realmente importa: Deus, família, mente , corpo e bolso.
+                    </p>
+                    
+<div class="stats-row">
+    
+    <div class="stat" style="border-color: #0d3b7a;">
+        <h3 style="color: #1762ca;">1ª ACELERADORA</h3>
+        <p>Base Cristã do Brasil</p>
+    </div>
+    
+    <div class="stat" style="border-color: #0d3b7a;">
+        <h3 style="color: #1762ca;">FOCO EM LEGADO</h3>
+        <p>Impacto além do Negócio</p>
+    </div>
+
+    <div class="stat stat-wide" style="border-color: #0d3b7a;">
+        <h3 style="color: #1762ca;">METODOLOGIA PIR</h3>
+        <p>Decisões Baseadas em Dados</p>
+    </div>
+
+</div>
+                </div>
+
+                <div class="bio-images center fade-up delay-100" style="padding-top: 40px;">
+                    <img src="img logos/3.png" alt="A Liga Logo" style="width: 100%; max-width: 400px; opacity: 0.9;">
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                
+                <div class="footer-col">
+                    <h3>A Liga Empresarial</h3>
+                    <p class="footer-desc">
+                        A primeira aceleradora cristã do Brasil. Unindo fé, propósito e prosperidade para transformar empresários em líderes de legado.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Navegação</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Início</a></li>
+                        <li><a href="sobre.html">Sobre</a></li>
+                        <li><a href="depoimentos.html">Feedbacks</a></li>
+                        <li><a href="aplicacao.html">Assinatura</a></li>
+                    </ul>
+                </div>
+
+               <div class="footer-col">
+                    <h3>Fale Conosco</h3>
+                    <ul class="footer-links">
+                        <li>
+                            <a href="https://wa.me/+5561920041269?text=Ol%C3%A1%2C%20tudo%20bem%3F%3F" target="_blank">WhatsApp</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sigalearning@gmail.com&su=Contato%20pelo%20Site" target="_blank">E-mail</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.instagram.com/aligaempresarial/" target="_blank">Instagram</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.facebook.com/PROFJUNIORCARDOSO" target="_blank">Facebook</a>
+                        </li>
+                        
+                        <li>
+                            <a href="https://www.youtube.com/@aligaempresarial" target="_blank">YouTube</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Mais</h3>
+                    <ul class="footer-links">
+                        <li><a href="politica.html">Política de Privacidade</a></li>
+                        <li><a href="faq.html">Perguntas Frequentes</a></li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 A Liga Empresarial. Todos os direitos reservados.</p>
+                <p>CNPJ: 44.953.007/0001-01</p>
+                <a href="admin/login.html" class="admin-link"><i class="fas fa-lock"></i> Painel Admin</a>
+                 <p>Desenvolvido por <a href="https://nextlayer-agencia.netlify.app" target="_blank" style="color: #007BFF; font-weight: bold; text-decoration: none;">Nextlayer</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="modalContato" class="modal-overlay">
+        <div class="modal-box center" style="max-width: 400px;">
+            <span class="close-modal" onclick="fecharModalContato()">&times;</span>
+            <h3 style="color: #ffffff !important; margin-bottom: 20px;">Entre em Contato</h3>
+            
+            <div class="contact-buttons">
+                <a href="https://wa.me/+5561920041269?text=Ol%C3%A1%2C%20tudo%20bem%3F%3F" target="_blank" class="btn-contact whatsapp">
+                    <i class="fab fa-whatsapp"></i> Chamar no WhatsApp
+                </a>
+                
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=sigalearning@gmail.com&su=Contato%20pelo%20Site" target="_blank" class="btn-contact email">
+                    <i class="fas fa-envelope"></i> Enviar E-mail
+                </a>
+                
+                <a href="https://www.instagram.com/aligaempresarial/" target="_blank" class="btn-contact instagram">
+                    <i class="fab fa-instagram"></i> Seguir no Instagram
+                </a>
+                
+                <a href="https://www.facebook.com/PROFJUNIORCARDOSO" target="_blank" class="btn-contact facebook">
+                    <i class="fab fa-facebook-f"></i> Facebook
+                </a>
+                
+                <a href="https://www.youtube.com/@aligaempresarial" target="_blank" class="btn-contact youtube">
+                    <i class="fab fa-youtube"></i> YouTube
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <audio id="musicaSite" loop>
+        <source src="Img junior/WhatsApp Audio 2026-02-24 at 00.06.26.mpeg" type="audio/mpeg">
+        Seu navegador não suporta áudio.
+    </audio>
+    
+    <div class="music-btn" onclick="toggleMusic()">
+        <i id="musicIcon" class="fas fa-music"></i>
+        <div class="music-waves">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+
+
+   <div class="mobile-nav">
+    <a href="index.html" class="nav-item">
+        <i class="fas fa-home"></i>
+        <span>Início</span>
+    </a>
+    <a href="depoimentos.html" class="nav-item">
+        <i class="fas fa-star"></i>
+        <span>Feedbacks</span>
+    </a>
+    
+    <a href="aplicacao.html" class="nav-item highlight">
+        <i class="fas fa-file-contract"></i> 
+        <span>Assinatura</span>
+    </a>
+
+    <a href="sobre.html" class="nav-item">
+        <i class="fas fa-users"></i>
+        <span>Sobre</span>
+    </a>
+    
+    <a href="#" onclick="abrirModalContato(event)" class="nav-item">
+        <i class="fas fa-phone-alt"></i>
+        <span>Contato</span>
+    </a>
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin | A Liga</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="icon" type="image/x-icon" href="/img logos/3.png">
+</head>
+<body>
+
+    <a href="../../index.html" class="btn-back"><i class="fas fa-arrow-left"></i> Voltar ao Site</a>
+
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo-area">
+                <img src="/img logos/3.png" alt="Logo">
+                <h2>PAINEL ADMIN</h2>
+            </div>
+            
+            <form id="formLogin">
+                <div class="input-group">
+                    <label>E-mail de Acesso</label>
+                    <input type="email" id="email" placeholder="admin@aliga.com.br" required>
+                </div>
+                
+                <div class="input-group">
+                    <label>Senha</label>
+                    <input type="password" id="senha" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" id="btnEntrar">ENTRAR</button>
+                <p id="msgErro" class="error-msg">E-mail ou senha incorretos.</p>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>
