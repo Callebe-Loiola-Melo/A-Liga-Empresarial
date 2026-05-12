@@ -7,6 +7,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
     <link rel="stylesheet" href="css/painel.css">
     <link rel="icon" type="image/x-icon" href="/img logos/3.png">
 </head>
@@ -154,12 +158,25 @@
                     <label>História</label>
                     <textarea id="caseHist" rows="4"></textarea>
                 </div>
-                <div class="upload-area" onclick="document.getElementById('caseFotoInput').click()">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <span id="uploadText">Clique para alterar a foto</span>
-                    <input type="file" id="caseFotoInput" accept="image/*" onchange="previewImagem(event)" style="display:none;">
-                    <img id="imgPreview" src="" style="display:none; width: 100%; height: 200px; object-fit: cover; margin-top: 10px; border-radius: 8px;">
+                
+                <div class="input-group">
+                    <label>Foto (Proporção 3x4)</label>
+                    
+                    <div id="btnEscolherFoto" class="upload-area" onclick="document.getElementById('caseFotoInput').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <span id="uploadText">Clique para alterar a foto</span>
+                        <input type="file" id="caseFotoInput" accept="image/*" onchange="previewImagem(event)" style="display:none;">
+                    </div>
+                    
+                    <div id="areaPreviewCrop" style="display:none; margin-top: 15px; width: 100%;">
+                        <p id="txtInstrucaoCrop" style="color:#aaa; font-size:0.85rem; margin-bottom:10px;"><i class="fas fa-crop-alt"></i> Ajuste o enquadramento (3x4):</p>
+                        <div style="width: 100%; max-height: 400px; overflow: hidden; border-radius: 8px; background: #000; border: 1px solid #333;">
+                            <img id="imgPreview" style="display:block; max-width: 100%;">
+                        </div>
+                        <button class="btn-ghost-sm" style="margin-top:15px; width: 100%; border: 1px dashed #444;" onclick="document.getElementById('caseFotoInput').click()">Escolher Outra Foto</button>
+                    </div>
                 </div>
+
             </div>
             <div class="modal-footer">
                 <button id="btnExcluirCase" onclick="deletarCaseAtual()" class="btn-delete-modal" style="display:none;">Excluir</button>

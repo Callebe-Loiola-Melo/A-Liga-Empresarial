@@ -31,29 +31,22 @@ function setupAnoSelect() {
 }
 
 function mudarAba(aba) {
-    // 1. Esconde todas as abas e mostra a certa
     document.querySelectorAll('.aba').forEach(e => e.style.display = 'none');
     document.getElementById(`aba-${aba}`).style.display = 'block';
     
-    // 2. Fecha o menu mobile (se estiver aberto)
     const menu = document.querySelector('.sidebar');
     const overlay = document.querySelector('.sidebar-overlay');
     if(menu) menu.classList.remove('show');
     if(overlay) overlay.classList.remove('show');
 
-    // 3. ATUALIZA A COR DO MENU LATERAL (CORREÇÃO AQUI)
     const menuItems = document.querySelectorAll('.menu li');
-    
-    // Remove 'active' de todos
     menuItems.forEach(li => li.classList.remove('active'));
 
-    // Adiciona 'active' no item certo baseado na ordem da lista HTML
-    if(aba === 'dashboard') menuItems[0].classList.add('active'); // 1º Item: Visão Geral
-    if(aba === 'aplicacoes') menuItems[1].classList.add('active'); // 2º Item: Membros
-    if(aba === 'cases') menuItems[2].classList.add('active');      // 3º Item: Histórias
-    if(aba === 'feedbacks') menuItems[3].classList.add('active');  // 4º Item: Feedbacks
+    if(aba === 'dashboard') menuItems[0].classList.add('active');
+    if(aba === 'aplicacoes') menuItems[1].classList.add('active');
+    if(aba === 'cases') menuItems[2].classList.add('active');
+    if(aba === 'feedbacks') menuItems[3].classList.add('active');
 
-    // 4. Carrega os dados da aba
     if(aba === 'dashboard') carregarDashboard();
     if(aba === 'aplicacoes') carregarAplicacoes();
     if(aba === 'cases') carregarCases();
@@ -124,7 +117,7 @@ async function carregarDashboard() {
     } catch(e) { console.error(e); }
 }
 
-// --- MEMBROS (Visual Ajustado: Abrir Branco) ---
+// --- MEMBROS ---
 let membrosCache = [];
 async function carregarAplicacoes() {
     const res = await fetch(`${API_URL}/aplicacoes`);
@@ -144,7 +137,6 @@ function renderizarMembros() {
         const zapLink = `https://wa.me/${l.whatsapp.replace(/\D/g,'')}`;
         const faturamentoDisplay = l.faturamento ? l.faturamento : '-';
 
-        // ALTERAÇÃO 1: Botão "Abrir", Branco, Sem sublinhado
         const btnObjetivo = l.objetivo && l.objetivo.length > 0 
             ? `<span style="color:white; cursor:pointer; font-weight:bold; text-decoration:none;" onclick="abrirModalMembro(${l.id})">Abrir</span>`
             : '<span style="color:#666;">-</span>';
@@ -170,7 +162,6 @@ function renderizarMembros() {
 
 function limparFiltroMembros() { document.getElementById('filtroDataMembros').value = ''; renderizarMembros(); }
 
-// --- MODAL MEMBRO (Visual Ajustado: Plano Branco, Ícone Removido, Botão Verde) ---
 function abrirModalMembro(id) {
     const membro = membrosCache.find(m => m.id === id);
     if (!membro) return;
@@ -182,14 +173,11 @@ function abrirModalMembro(id) {
     const data = new Date(membro.created_at).toLocaleDateString('pt-BR') + ' às ' + new Date(membro.created_at).toLocaleTimeString('pt-BR');
     const zapLink = `https://wa.me/${membro.whatsapp.replace(/\D/g,'')}`;
 
-    // Monta o conteúdo
     corpo.innerHTML = `
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom:20px;">
             <div><small style="color:#888;">Data do Cadastro</small><br><strong style="color:white;">${data}</strong></div>
-            
             <div><small style="color:#888;">Plano Escolhido</small><br><strong style="color:white;">${membro.plano_interesse}</strong></div>
         </div>
-
         <div style="background:#111; padding:15px; border-radius:8px; border:1px solid #333; margin-bottom:15px;">
             <h4 style="color:white; margin:0 0 10px 0; border-bottom:1px solid #333; padding-bottom:5px;">Dados Pessoais</h4>
             <p><strong>Nome:</strong> ${membro.nome}</p>
@@ -198,14 +186,12 @@ function abrirModalMembro(id) {
             <p><strong>Segmento:</strong> ${membro.segmento || '-'}</p>
             <p><strong>Faturamento:</strong> ${membro.faturamento || 'Não informado'}</p>
         </div>
-
         <div style="background:#1a1a1a; padding:15px; border-radius:8px; border:1px solid #444;">
             <h4 style="color:var(--gold); margin:0 0 10px 0;">Objetivo / Desafio</h4>
             <p style="font-style:italic; color:#ddd;">"${membro.objetivo || 'Nenhum objetivo registrado.'}"</p>
         </div>
     `;
 
-    // ALTERAÇÃO 4: Botão do WhatsApp VERDE (#25D366)
     footer.innerHTML = `
         <button onclick="deletarMembro(${membro.id}); document.getElementById('modalMembro').style.display='none'" class="btn-delete-modal">Excluir Registro</button>
         <div style="flex:1;"></div>
@@ -230,8 +216,10 @@ async function deletarMembro(id) {
     }
 }
 
-// ... (O RESTANTE DAS FUNÇÕES DE CASES E FEEDBACKS PERMANECE IGUAL)
+// --- CASES (Com Cropper 3x4) ---
 let casesCache = [];
+let cropper = null; // Variável global para gerenciar o Cropper
+
 async function carregarCases() {
     const res = await fetch(`${API_URL}/cases`);
     casesCache = await res.json();
@@ -258,10 +246,14 @@ function abrirModalCase() {
     document.getElementById('caseNome').value = "";
     document.getElementById('caseSub').value = "";
     document.getElementById('caseHist').value = "";
-    const inputFoto = document.getElementById('caseFotoInput');
-    inputFoto.value = "";
-    document.getElementById('imgPreview').style.display = 'none';
+    document.getElementById('caseFotoInput').value = "";
+    
+    // Reseta o Cropper e a área de imagem
+    if (cropper) { cropper.destroy(); cropper = null; }
+    document.getElementById('areaPreviewCrop').style.display = 'none';
+    document.getElementById('btnEscolherFoto').style.display = 'block';
     document.getElementById('imgPreview').src = "";
+    
     document.getElementById('btnExcluirCase').style.display = 'none';
     document.getElementById('modalCase').style.display = 'flex';
 }
@@ -274,18 +266,28 @@ function editarCase(id) {
     document.getElementById('caseNome').value = c.nome;
     document.getElementById('caseSub').value = c.subtitulo;
     document.getElementById('caseHist').value = c.historia;
+    
+    document.getElementById('caseFotoInput').value = "";
+    if (cropper) { cropper.destroy(); cropper = null; }
+
     if(c.foto_url) {
-        const imgP = document.getElementById('imgPreview');
-        imgP.src = c.foto_url;
-        imgP.style.display = 'block';
+        document.getElementById('imgPreview').src = c.foto_url;
+        document.getElementById('areaPreviewCrop').style.display = 'block';
+        document.getElementById('btnEscolherFoto').style.display = 'none';
+        document.getElementById('txtInstrucaoCrop').style.display = 'none'; // Esconde texto de instrução
     } else {
-        document.getElementById('imgPreview').style.display = 'none';
+        document.getElementById('areaPreviewCrop').style.display = 'none';
+        document.getElementById('btnEscolherFoto').style.display = 'block';
     }
+
     document.getElementById('btnExcluirCase').style.display = 'block';
     document.getElementById('modalCase').style.display = 'flex';
 }
 
-function fecharModalCase() { document.getElementById('modalCase').style.display = 'none'; }
+function fecharModalCase() { 
+    if (cropper) { cropper.destroy(); cropper = null; }
+    document.getElementById('modalCase').style.display = 'none'; 
+}
 
 function previewImagem(e) {
     const file = e.target.files[0];
@@ -294,7 +296,23 @@ function previewImagem(e) {
         reader.onload = function(evt) { 
             const img = document.getElementById('imgPreview');
             img.src = evt.target.result; 
-            img.style.display = 'block'; 
+            
+            // Troca a visibilidade dos blocos
+            document.getElementById('btnEscolherFoto').style.display = 'none';
+            document.getElementById('areaPreviewCrop').style.display = 'block';
+            document.getElementById('txtInstrucaoCrop').style.display = 'block';
+
+            // Destrói instância anterior do cropper, se houver
+            if (cropper) { cropper.destroy(); }
+
+            // Inicia o Cropper com a proporção exata de 3x4
+            cropper = new Cropper(img, {
+                aspectRatio: 3 / 4,
+                viewMode: 1, // Impede que o recorte saia dos limites da imagem
+                autoCropArea: 1, // Preenche o máximo possível de início
+                responsive: true,
+                background: false
+            });
         }
         reader.readAsDataURL(file);
     }
@@ -313,12 +331,17 @@ async function salvarCase() {
         formData.append('subtitulo', document.getElementById('caseSub').value);
         formData.append('historia', document.getElementById('caseHist').value);
         
-        const fileInput = document.getElementById('caseFotoInput');
-        if(fileInput.files[0]) {
-            // Comprime a foto antes de enviar pro Supabase
-            const fotoComprimida = await comprimirImagem(fileInput.files[0]);
-            formData.append('foto', fotoComprimida);
+        // Se o Cropper estiver ativo (houve alteração na foto), processa e envia
+        if(cropper) {
+            const blob = await new Promise(resolve => {
+                cropper.getCroppedCanvas({
+                    maxWidth: 900,
+                    maxHeight: 1200
+                }).toBlob((b) => resolve(b), 'image/jpeg', 0.8);
+            });
+            formData.append('foto', blob, 'foto_case.jpg');
         }
+        
         if(id) {
             await fetch(`${API_URL}/cases/${id}`, { method: 'DELETE' });
         }
@@ -346,6 +369,7 @@ async function deletarCaseAtual() {
     }
 }
 
+// --- FEEDBACKS ---
 let feedCache = [];
 async function carregarFeedbacks() {
     const res = await fetch(`${API_URL}/depoimentos`);
@@ -381,6 +405,7 @@ function renderizarFeedbacks() {
         `;
     });
 }
+
 function limparFiltroFeed() { document.getElementById('filtroDataFeed').value = ''; renderizarFeedbacks(); }
 
 function abrirDetalhesFeed(id) {
@@ -437,44 +462,4 @@ async function deletarFeed(id) {
     }
 }
 
-// --- FUNÇÃO PARA COMPRIMIR IMAGENS ---
-async function comprimirImagem(file, maxWidth = 800, maxHeight = 800, quality = 0.7) {
-    return new Promise((resolve) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (event) => {
-            const img = new Image();
-            img.src = event.target.result;
-            img.onload = () => {
-                let width = img.width;
-                let height = img.height;
-
-                if (width > height) {
-                    if (width > maxWidth) {
-                        height = Math.round((height * maxWidth) / width);
-                        width = maxWidth;
-                    }
-                } else {
-                    if (height > maxHeight) {
-                        width = Math.round((width * maxHeight) / height);
-                        height = maxHeight;
-                    }
-                }
-
-                const canvas = document.createElement('canvas');
-                canvas.width = width;
-                canvas.height = height;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, width, height);
-
-                canvas.toBlob((blob) => {
-                    const newFile = new File([blob], file.name, {
-                        type: 'image/jpeg',
-                        lastModified: Date.now()
-                    });
-                    resolve(newFile);
-                }, 'image/jpeg', quality);
-            };
-        };
-    });
-}
+// Obs: A função antiga "comprimirImagem" não é mais necessária pois o canvas.toBlob do Cropper já faz exatamente a mesma coisa (comprime via formato JPEG e quality 0.8), deixando o código mais limpo e rápido!
