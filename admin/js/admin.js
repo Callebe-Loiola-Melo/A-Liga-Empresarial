@@ -305,9 +305,9 @@ function previewImagem(e) {
             // Destrói instância anterior do cropper, se houver
             if (cropper) { cropper.destroy(); }
 
-            // Inicia o Cropper com a proporção exata de 3x4
+            // Inicia o Cropper com a proporção horizontal para os cards
             cropper = new Cropper(img, {
-                aspectRatio: 3 / 4,
+                aspectRatio: 16 / 9, // <-- MUDOU AQUI: Proporção retangular deitada
                 viewMode: 1, // Impede que o recorte saia dos limites da imagem
                 autoCropArea: 1, // Preenche o máximo possível de início
                 responsive: true,
