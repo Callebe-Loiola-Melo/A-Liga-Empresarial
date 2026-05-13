@@ -61,7 +61,7 @@ const planosData = {
         `
     },
     alpha: {
-        title: "CONTADOR ALPHA",
+        title: "CONTABILIDADE ALPHA",
         price: "R$ 500,00 / mês", 
         content: `
             <ul class="lista-alpha">
@@ -313,7 +313,7 @@ if(formApp) {
             
             } else if (dados.plano_interesse === 'Contador Alpha') {
                 // Mensagem WhatsApp Formatada
-                const msg = `Olá! Gostaria de marcar uma mentoria em relação ao plano de serviço *Contador Alpha*.%0A%0A` +
+                const msg = `Olá! Gostaria de marcar uma mentoria em relação ao plano de serviço *Contabilidade Alpha*.%0A%0A` +
                             `*Meus Dados:*%0A` +
                             `👤 Nome: ${dados.nome}%0A` +
                             `🏢 Empresa: ${dados.empresa}%0A` +
