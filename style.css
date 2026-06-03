@@ -607,6 +607,7 @@ footer { background-color: #050505; padding: 70px 0 20px; border-top: 1px solid 
     .split-right { order: -1; padding: 40px 20px; }
     .split-left { padding: 40px 20px; }
     .option-grid.three-cols { grid-template-columns: 1fr; }
+    .form-legacy {  padding: 25px; }
 }
 
 /* --- BIOGRAFIA & EFEITOS VISUAIS (FOTO COM DEGRADÊ) --- */
@@ -742,7 +743,7 @@ footer { background-color: #050505; padding: 70px 0 20px; border-top: 1px solid 
 
 
     /* 1. TOPO (NAVBAR) - Simplificado */
-    .nav-links, .btn-nav { display: none !important; } /* Esconde links e botão do topo */
+    .nav-links, .navbar .btn-nav { display: none !important; } /* Esconde links e botão do topo */
     .nav-container { justify-content: center; } /* Centraliza a logo */
     .logo-text { font-size: 1rem; } /* Ajusta tamanho do texto da logo */
     
