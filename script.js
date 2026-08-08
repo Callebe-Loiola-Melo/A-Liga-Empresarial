@@ -36,7 +36,7 @@ function verificarPlano() {
 const planosData = {
     start: {
         title: "LIGA START",
-        price: "R$ 149,97 / mês",
+        price: "R$ 310,27 / mês",
         content: `
             <ul>
                 <li><i class="fas fa-check"></i> Foco em autoconhecimento, vendas e Marketing.</li>
@@ -50,7 +50,7 @@ const planosData = {
     },
     premium: {
         title: "LIGA PREMIUM",
-        price: "R$ 500,00 / mês",
+        price: "R$ 517,12 / mês",
         content: `
             <ul>
                 <li><i class="fas fa-check"></i> Tudo do plano START incluso.</li>
@@ -306,10 +306,10 @@ if(formApp) {
 
             // 3. Redirecionamento baseado no plano
             if (dados.plano_interesse === 'Start') {
-                window.location.href = 'https://pay.kiwify.com.br/lVYnA79?afid=mYrzh5x6';
+                window.location.href = 'https://pay.kiwify.com.br/xocIUZ4';
             
             } else if (dados.plano_interesse === 'Premium') {
-                window.location.href = 'https://pay.kiwify.com.br/iQTcFoB';
+                window.location.href = 'https://pay.kiwify.com.br/QIibNsY';
             
             } else if (dados.plano_interesse === 'Contador Alpha') {
                 // Mensagem WhatsApp Formatada
