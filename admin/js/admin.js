@@ -3,32 +3,8 @@ const API_URL = '/.netlify/functions/api';
 if (!localStorage.getItem('adminLogado')) window.location.href = 'login.html';
 
 document.addEventListener('DOMContentLoaded', () => {
-    carregarDashboard();
-    setupAnoSelect();
+    // Inicia silenciosamente
 });
-
-// Filtro de Ano
-function setupAnoSelect() {
-    const select = document.getElementById('filtroAnoGraph');
-    const anoAtual = new Date().getFullYear();
-    const anoInicio = 2026;
-    
-    select.innerHTML = '';
-    const limite = anoAtual < anoInicio ? anoInicio : anoAtual + 1;
-
-    for (let i = anoInicio; i <= limite; i++) {
-        const opt = document.createElement('option');
-        opt.value = i;
-        opt.innerText = i;
-        if(i === anoAtual) opt.selected = true;
-        select.appendChild(opt);
-    }
-    if(select.options.length === 0) {
-        const opt = document.createElement('option');
-        opt.value = 2026; opt.innerText = "2026"; opt.selected = true;
-        select.appendChild(opt);
-    }
-}
 
 function mudarAba(aba) {
     document.querySelectorAll('.aba').forEach(e => e.style.display = 'none');
@@ -43,14 +19,14 @@ function mudarAba(aba) {
     menuItems.forEach(li => li.classList.remove('active'));
 
     if(aba === 'dashboard') menuItems[0].classList.add('active');
-    if(aba === 'aplicacoes') menuItems[1].classList.add('active');
-    if(aba === 'cases') menuItems[2].classList.add('active');
-    if(aba === 'feedbacks') menuItems[3].classList.add('active');
-
-    if(aba === 'dashboard') carregarDashboard();
-    if(aba === 'aplicacoes') carregarAplicacoes();
-    if(aba === 'cases') carregarCases();
-    if(aba === 'feedbacks') carregarFeedbacks();
+    if(aba === 'cases') {
+        menuItems[1].classList.add('active');
+        carregarCases();
+    }
+    if(aba === 'feedbacks') {
+        menuItems[2].classList.add('active');
+        carregarFeedbacks();
+    }
 }
 
 function toggleSidebar() {
@@ -62,163 +38,9 @@ function toggleSidebar() {
 
 function logout() { localStorage.removeItem('adminLogado'); window.location.href = 'login.html'; }
 
-// --- DASHBOARD ---
-async function carregarDashboard() {
-    try {
-        const res = await fetch(`${API_URL}/aplicacoes`);
-        const leads = await res.json();
-        const anoFiltro = document.getElementById('filtroAnoGraph').value;
-
-        const leadsAno = leads.filter(l => l.created_at.startsWith(anoFiltro));
-
-        const countStart = leadsAno.filter(l => l.plano_interesse === 'Start').length;
-        const countPremium = leadsAno.filter(l => l.plano_interesse === 'Premium').length;
-        const countAlpha = leadsAno.filter(l => l.plano_interesse === 'Contador Alpha').length;
-
-        document.getElementById('kpi-total').innerText = leadsAno.length;
-        document.getElementById('kpi-start').innerText = countStart;
-        document.getElementById('kpi-premium').innerText = countPremium;
-        document.getElementById('kpi-alpha').innerText = countAlpha;
-
-        const dataTotal = new Array(12).fill(0);
-        const dataStart = new Array(12).fill(0);
-        const dataPremium = new Array(12).fill(0);
-        const dataAlpha = new Array(12).fill(0);
-
-        leadsAno.forEach(l => {
-            const mes = new Date(l.created_at).getMonth();
-            dataTotal[mes]++;
-            if (l.plano_interesse === 'Start') dataStart[mes]++;
-            if (l.plano_interesse === 'Premium') dataPremium[mes]++;
-            if (l.plano_interesse === 'Contador Alpha') dataAlpha[mes]++;
-        });
-
-        const ctx = document.getElementById('graficoOnda').getContext('2d');
-        if(window.meuGrafico) window.meuGrafico.destroy();
-
-        window.meuGrafico = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-                datasets: [
-                    { label: 'Total', data: dataTotal, borderColor: '#0044cc', backgroundColor: 'rgba(0,68,204,0.1)', fill: true, tension: 0.4 },
-                    { label: 'Start', data: dataStart, borderColor: '#FFD700', borderDash: [5,5], tension: 0.4 },
-                    { label: 'Premium', data: dataPremium, borderColor: '#a0a0a0', tension: 0.4 },
-                    { label: 'Alpha', data: dataAlpha, borderColor: '#00ff00', tension: 0.4 }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: true, labels: { color: 'white' } } },
-                scales: { x: { grid: { color: '#222' } }, y: { grid: { color: '#222' } } }
-            }
-        });
-    } catch(e) { console.error(e); }
-}
-
-// --- MEMBROS ---
-let membrosCache = [];
-async function carregarAplicacoes() {
-    const res = await fetch(`${API_URL}/aplicacoes`);
-    membrosCache = await res.json();
-    renderizarMembros();
-}
-
-function renderizarMembros() {
-    const tbody = document.getElementById('lista-aplicacoes');
-    const filtro = document.getElementById('filtroDataMembros').value;
-    tbody.innerHTML = '';
-
-    const lista = membrosCache.filter(l => !filtro || l.created_at.startsWith(filtro));
-
-    lista.forEach(l => {
-        const data = new Date(l.created_at).toLocaleDateString('pt-BR');
-        const zapLink = `https://wa.me/${l.whatsapp.replace(/\D/g,'')}`;
-        const faturamentoDisplay = l.faturamento ? l.faturamento : '-';
-
-        const btnObjetivo = l.objetivo && l.objetivo.length > 0 
-            ? `<span style="color:white; cursor:pointer; font-weight:bold; text-decoration:none;" onclick="abrirModalMembro(${l.id})">Abrir</span>`
-            : '<span style="color:#666;">-</span>';
-
-        tbody.innerHTML += `
-            <tr onclick="abrirModalMembro(${l.id})" style="cursor:pointer;" title="Clique para ver detalhes">
-                <td style="color:#666;">${data}</td>
-                <td><strong>${l.nome}</strong></td>
-                <td>${faturamentoDisplay}</td>
-                <td>${l.plano_interesse}</td>
-                <td>${btnObjetivo}</td>
-                <td>${l.whatsapp}</td> 
-                <td onclick="event.stopPropagation()">
-                    <div class="action-btns">
-                        <a href="${zapLink}" target="_blank" class="btn-action btn-zap"><i class="fab fa-whatsapp"></i></a>
-                        <i class="fas fa-trash btn-action btn-del" onclick="deletarMembro(${l.id})"></i>
-                    </div>
-                </td>
-            </tr>
-        `;
-    });
-}
-
-function limparFiltroMembros() { document.getElementById('filtroDataMembros').value = ''; renderizarMembros(); }
-
-function abrirModalMembro(id) {
-    const membro = membrosCache.find(m => m.id === id);
-    if (!membro) return;
-
-    const modal = document.getElementById('modalMembro');
-    const corpo = document.getElementById('corpoModalMembro');
-    const footer = document.getElementById('footerModalMembro');
-    
-    const data = new Date(membro.created_at).toLocaleDateString('pt-BR') + ' às ' + new Date(membro.created_at).toLocaleTimeString('pt-BR');
-    const zapLink = `https://wa.me/${membro.whatsapp.replace(/\D/g,'')}`;
-
-    corpo.innerHTML = `
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px; margin-bottom:20px;">
-            <div><small style="color:#888;">Data do Cadastro</small><br><strong style="color:white;">${data}</strong></div>
-            <div><small style="color:#888;">Plano Escolhido</small><br><strong style="color:white;">${membro.plano_interesse}</strong></div>
-        </div>
-        <div style="background:#111; padding:15px; border-radius:8px; border:1px solid #333; margin-bottom:15px;">
-            <h4 style="color:white; margin:0 0 10px 0; border-bottom:1px solid #333; padding-bottom:5px;">Dados Pessoais</h4>
-            <p><strong>Nome:</strong> ${membro.nome}</p>
-            <p><strong>WhatsApp:</strong> ${membro.whatsapp}</p>
-            <p><strong>Empresa:</strong> ${membro.empresa || '-'}</p>
-            <p><strong>Segmento:</strong> ${membro.segmento || '-'}</p>
-            <p><strong>Faturamento:</strong> ${membro.faturamento || 'Não informado'}</p>
-        </div>
-        <div style="background:#1a1a1a; padding:15px; border-radius:8px; border:1px solid #444;">
-            <h4 style="color:var(--gold); margin:0 0 10px 0;">Objetivo / Desafio</h4>
-            <p style="font-style:italic; color:#ddd;">"${membro.objetivo || 'Nenhum objetivo registrado.'}"</p>
-        </div>
-    `;
-
-    footer.innerHTML = `
-        <button onclick="deletarMembro(${membro.id}); document.getElementById('modalMembro').style.display='none'" class="btn-delete-modal">Excluir Registro</button>
-        <div style="flex:1;"></div>
-        <a href="${zapLink}" target="_blank" class="btn-primary" style="background-color: #22944c; border: none; text-decoration:none; display:inline-flex; align-items:center; gap:10px;">
-            <i class="fab fa-whatsapp"></i> Chamar no WhatsApp
-        </a>
-    `;
-
-    modal.style.display = 'flex';
-}
-
-async function deletarMembro(id) {
-    if(confirm('Tem certeza que deseja excluir este registro de membro?')) {
-        try {
-            await fetch(`${API_URL}/aplicacoes/${id}`, { method: 'DELETE' });
-            carregarAplicacoes();
-            carregarDashboard(); 
-        } catch (error) {
-            alert('Erro ao excluir membro.');
-            console.error(error);
-        }
-    }
-}
-
 // --- CASES (Com Cropper 3x4) ---
 let casesCache = [];
-let cropper = null; // Variável global para gerenciar o Cropper
+let cropper = null; 
 
 async function carregarCases() {
     const res = await fetch(`${API_URL}/cases`);
@@ -248,7 +70,6 @@ function abrirModalCase() {
     document.getElementById('caseHist').value = "";
     document.getElementById('caseFotoInput').value = "";
     
-    // Reseta o Cropper e a área de imagem
     if (cropper) { cropper.destroy(); cropper = null; }
     document.getElementById('areaPreviewCrop').style.display = 'none';
     document.getElementById('btnEscolherFoto').style.display = 'block';
@@ -274,7 +95,7 @@ function editarCase(id) {
         document.getElementById('imgPreview').src = c.foto_url;
         document.getElementById('areaPreviewCrop').style.display = 'block';
         document.getElementById('btnEscolherFoto').style.display = 'none';
-        document.getElementById('txtInstrucaoCrop').style.display = 'none'; // Esconde texto de instrução
+        document.getElementById('txtInstrucaoCrop').style.display = 'none'; 
     } else {
         document.getElementById('areaPreviewCrop').style.display = 'none';
         document.getElementById('btnEscolherFoto').style.display = 'block';
@@ -297,19 +118,15 @@ function previewImagem(e) {
             const img = document.getElementById('imgPreview');
             img.src = evt.target.result; 
             
-            // Troca a visibilidade dos blocos
             document.getElementById('btnEscolherFoto').style.display = 'none';
             document.getElementById('areaPreviewCrop').style.display = 'block';
             document.getElementById('txtInstrucaoCrop').style.display = 'block';
 
-            // Destrói instância anterior do cropper, se houver
             if (cropper) { cropper.destroy(); }
-
-            // Inicia o Cropper com a proporção horizontal para os cards
             cropper = new Cropper(img, {
-                aspectRatio: 16 / 9, // <-- MUDOU AQUI: Proporção retangular deitada
-                viewMode: 1, // Impede que o recorte saia dos limites da imagem
-                autoCropArea: 1, // Preenche o máximo possível de início
+                aspectRatio: 16 / 9,
+                viewMode: 1, 
+                autoCropArea: 1, 
                 responsive: true,
                 background: false
             });
@@ -331,13 +148,9 @@ async function salvarCase() {
         formData.append('subtitulo', document.getElementById('caseSub').value);
         formData.append('historia', document.getElementById('caseHist').value);
         
-        // Se o Cropper estiver ativo (houve alteração na foto), processa e envia
         if(cropper) {
             const blob = await new Promise(resolve => {
-                cropper.getCroppedCanvas({
-                    maxWidth: 900,
-                    maxHeight: 1200
-                }).toBlob((b) => resolve(b), 'image/jpeg', 0.8);
+                cropper.getCroppedCanvas({ maxWidth: 900, maxHeight: 1200 }).toBlob((b) => resolve(b), 'image/jpeg', 0.8);
             });
             formData.append('foto', blob, 'foto_case.jpg');
         }
@@ -461,5 +274,3 @@ async function deletarFeed(id) {
         carregarFeedbacks(); 
     }
 }
-
-// Obs: A função antiga "comprimirImagem" não é mais necessária pois o canvas.toBlob do Cropper já faz exatamente a mesma coisa (comprime via formato JPEG e quality 0.8), deixando o código mais limpo e rápido!

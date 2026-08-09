@@ -6,7 +6,6 @@
     <title>Painel Admin | A Liga</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
@@ -31,8 +30,7 @@
             <i class="fas fa-times close-sidebar-btn" onclick="toggleSidebar()"></i>
         </div>
         <ul class="menu">
-            <li class="active" onclick="mudarAba('dashboard'); toggleSidebar()"><i class="fas fa-chart-line"></i> Visão Geral</li>
-            <li onclick="mudarAba('aplicacoes'); toggleSidebar()"><i class="fas fa-users"></i> Membros</li>
+            <li class="active" onclick="mudarAba('dashboard'); toggleSidebar()"><i class="fas fa-home"></i> Início</li>
             <li onclick="mudarAba('cases'); toggleSidebar()"><i class="fas fa-star"></i> Histórias</li>
             <li onclick="mudarAba('feedbacks'); toggleSidebar()"><i class="fas fa-comments"></i> Feedbacks</li>
         </ul>
@@ -44,63 +42,21 @@
     <div class="main-content">
         
         <div id="aba-dashboard" class="aba">
-            <div class="header-flex">
-                <div class="header-title">
-                    <h2>Visão Geral</h2>
-                    <p>Crescimento mensal.</p>
-                </div>
-                <select id="filtroAnoGraph" onchange="carregarDashboard()" class="select-year"></select>
+            <div class="header-title">
+                <h2>Bem-vindo(a) ao Painel</h2>
+                <p>O que você deseja gerenciar hoje?</p>
             </div>
             
-            <div class="kpi-grid">
-                <div class="kpi-card" style="border-top: 4px solid #0044cc;">
-                    <h3><span class="dot-color" style="background:#0044cc;"></span> Total</h3>
-                    <span id="kpi-total">0</span>
+            <div class="kpi-grid" style="margin-top: 30px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+                <div class="kpi-card" style="border-top: 4px solid #FFD700; cursor: pointer; transition: 0.3s;" onclick="mudarAba('cases')" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <h3><i class="fas fa-star" style="color:#FFD700; margin-right: 10px;"></i> Histórias</h3>
+                    <span style="font-size: 1rem; color: #aaa;">Adicionar/Editar Cases</span>
                 </div>
-                <div class="kpi-card" style="border-top: 4px solid #FFD700;">
-                    <h3><span class="dot-color" style="background:#FFD700;"></span> Start</h3>
-                    <span id="kpi-start">0</span>
-                </div>
-                <div class="kpi-card" style="border-top: 4px solid #a0a0a0;">
-                    <h3><span class="dot-color" style="background:#a0a0a0;"></span> Premium</h3>
-                    <span id="kpi-premium">0</span>
-                </div>
-                <div class="kpi-card" style="border-top: 4px solid #00ff00;">
-                    <h3><span class="dot-color" style="background:#00ff00;"></span> Alpha</h3>
-                    <span id="kpi-alpha">0</span>
+                <div class="kpi-card" style="border-top: 4px solid #0044cc; cursor: pointer; transition: 0.3s;" onclick="mudarAba('feedbacks')" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                    <h3><i class="fas fa-comments" style="color:#0044cc; margin-right: 10px;"></i> Feedbacks</h3>
+                    <span style="font-size: 1rem; color: #aaa;">Aprovar/Excluir Depoimentos</span>
                 </div>
             </div>
-            <div class="chart-box">
-                <canvas id="graficoOnda"></canvas>
-            </div>
-            <p>Desenvolvido por <a href="https://nextlayer-agencia.netlify.app" target="_blank" style="color: #007BFF; font-weight: bold; text-decoration: none;">Nextlayer</a></p>
-        </div>
-
-        <div id="aba-aplicacoes" class="aba" style="display:none;">
-            <div class="header-title">
-                <h2>Membros</h2>
-            </div>
-            <div class="filter-bar">
-                <label>Data:</label>
-                <input type="date" id="filtroDataMembros" onchange="carregarAplicacoes()">
-                <button onclick="limparFiltroMembros()" class="btn-ghost-sm">Limpar</button>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Nome</th>
-                            <th>Faturamento</th>
-                            <th>Plano</th>
-                            <th>Objetivo</th> <th>Contato</th> 
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody id="lista-aplicacoes"></tbody>
-                </table>
-            </div>
-            <p>Desenvolvido por <a href="https://nextlayer-agencia.netlify.app" target="_blank" style="color: #007BFF; font-weight: bold; text-decoration: none;">Nextlayer</a></p>
         </div>
 
         <div id="aba-cases" class="aba" style="display:none;">
@@ -125,19 +81,7 @@
 
     </div>
 
-    <div id="modalMembro" class="modal-overlay">
-        <div class="modal-box">
-            <div class="modal-header">
-                <h3>Detalhes do Membro</h3>
-                <div class="close-btn-circle" onclick="document.getElementById('modalMembro').style.display='none'">&times;</div>
-            </div>
-            <div class="modal-body" id="corpoModalMembro" style="color: #ccc; line-height: 1.6;">
-                </div>
-            <div class="modal-footer" id="footerModalMembro">
-                </div>
-        </div>
-    </div>
-
+    <!-- Modais de Cases e Feedbacks originais mantidos -->
     <div id="modalCase" class="modal-overlay">
         <div class="modal-box">
             <div class="modal-header">

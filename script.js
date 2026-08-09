@@ -16,23 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     carregarDepoimentosSite();
 });
 
-// --- LÓGICA DO FORMULÁRIO DE APLICAÇÃO (MOSTRAR/ESCONDER FATURAMENTO) ---
-function verificarPlano() {
-    const planoSelecionado = document.querySelector('input[name="plano"]:checked')?.value;
-    const divFat = document.getElementById('containerFaturamento');
-
-    if (planoSelecionado === 'Contador Alpha') {
-        // Se for Alpha, ESCONDE e limpa a seleção
-        divFat.style.display = 'none';
-        const radiosFat = document.querySelectorAll('input[name="faturamento"]');
-        radiosFat.forEach(r => r.checked = false);
-    } else {
-        // Se for Start ou Premium, MOSTRA
-        divFat.style.display = 'block';
-    }
-}
-
-// --- LÓGICA DOS MODAIS DE PLANOS ---
+// --- LÓGICA DOS MODAIS DE PLANOS (HOME) ---
 const planosData = {
     start: {
         title: "LIGA START",
@@ -65,37 +49,11 @@ const planosData = {
         price: "R$ 500,00 / mês", 
         content: `
             <ul class="lista-alpha">
-                <li>
-                    <i class="fas fa-check"></i>
-                    <div>
-                        Grupo exclusivo para donos de contabilidade.
-                    </div>
-                </li>
-                <li>
-                    <i class="fas fa-check"></i>
-                    <div>
-                        Programa estruturado com início, meio e fim.
-                    </div>
-                </li>
-                <li>
-                    <i class="fas fa-check"></i>
-                    <div>
-                        2h de imersão em casos reais + 1h de mentoria coletiva
-                        (Por encontro presencial).
-                    </div>
-                </li>
-                 <li>
-                    <i class="fas fa-check"></i>
-                    <div>
-                       Conselho empresarial próprio de contadores.
-                    </div>
-                </li>
-                <li>
-                    <i class="fas fa-check"></i>
-                    <div>
-                        Aprenda a faturar até 6x mais do mesmo cliente.
-                    </div>
-                </li>
+                <li><i class="fas fa-check"></i><div>Grupo exclusivo para donos de contabilidade.</div></li>
+                <li><i class="fas fa-check"></i><div>Programa estruturado com início, meio e fim.</div></li>
+                <li><i class="fas fa-check"></i><div>2h de imersão em casos reais + 1h de mentoria coletiva.</div></li>
+                 <li><i class="fas fa-check"></i><div>Conselho empresarial próprio de contadores.</div></li>
+                <li><i class="fas fa-check"></i><div>Aprenda a faturar até 6x mais do mesmo cliente.</div></li>
             </ul>
         `
     }
@@ -106,6 +64,7 @@ window.abrirModalPlano = function(tipo) {
     const title = document.getElementById('planTitle');
     const price = document.getElementById('planPrice');
     const content = document.getElementById('planContent');
+    const btnModal = document.querySelector('#modalPlanos .btn-hero'); // Pega o botão do modal
     const data = planosData[tipo];
 
     if(data && modal) {
@@ -114,20 +73,33 @@ window.abrirModalPlano = function(tipo) {
         content.innerHTML = data.content;
         
         // Remove classes de temas anteriores
-        modal.classList.remove('premium-theme');
-        modal.classList.remove('silver-theme');
-        modal.classList.remove('gold-theme');
+        modal.classList.remove('premium-theme', 'silver-theme', 'gold-theme');
 
         // Reseta cores para o padrão (Start - Azul)
         title.style.color = '#1762ca'; 
         price.style.color = '#1762ca';
 
-        // LÓGICA DE CORES
-        if(tipo === 'premium') {
-            modal.classList.add('silver-theme'); // Ativa Cinza
+        // LÓGICA DE CORES E LINKS DINÂMICOS
+        if(tipo === 'start') {
+            if(btnModal) {
+                btnModal.href = 'https://pay.kiwify.com.br/xocIUZ4';
+                btnModal.target = '_blank';
+            }
+        }
+        else if(tipo === 'premium') {
+            modal.classList.add('silver-theme'); 
+            if(btnModal) {
+                btnModal.href = 'https://pay.kiwify.com.br/QIibNsY';
+                btnModal.target = '_blank';
+            }
         } 
         else if (tipo === 'alpha') {
-            modal.classList.add('gold-theme'); // Ativa Dourado
+            modal.classList.add('gold-theme'); 
+            if(btnModal) {
+                const msg = `Olá! Gostaria de marcar uma mentoria e assinar o plano *Contabilidade Alpha*.`;
+                btnModal.href = `https://api.whatsapp.com/send?phone=5561995778295&text=${msg}`;
+                btnModal.target = '_blank';
+            }
         }
 
         modal.style.display = 'flex';
@@ -147,7 +119,6 @@ window.fecharModalPlano = function() {
 window.onclick = function(e) {
     const mContato = document.getElementById('modalContato');
     const mPlanos = document.getElementById('modalPlanos');
-    
     if(e.target == mContato) fecharModalContato();
     if(e.target == mPlanos) fecharModalPlano();
 }
@@ -220,9 +191,7 @@ async function carregarDepoimentosSite() {
     } catch (error) { console.error("❌ Erro ao carregar depoimentos:", error); }
 }
 
-// --- 3. ENVIO DE FORMULÁRIOS ---
-
-// Formulário de Depoimentos
+// --- ENVIO DE FORMULÁRIO DE DEPOIMENTOS ---
 const formDepo = document.getElementById('formDepoimento');
 if(formDepo) {
     formDepo.addEventListener('submit', async (e) => {
@@ -242,7 +211,6 @@ if(formDepo) {
 
         const fotoInput = document.getElementById('depoFoto');
         if(fotoInput && fotoInput.files[0]) {
-            // Comprime a foto antes de enviar
             const fotoComprimida = await comprimirImagem(fotoInput.files[0]);
             formData.append('foto', fotoComprimida);
         }
@@ -258,77 +226,26 @@ if(formDepo) {
     });
 }
 
-// --- FORMULÁRIO DE APLICAÇÃO (MEMBROS) - ATUALIZADO ---
+// --- SELEÇÃO DIRETA DE PLANOS (PÁGINA DE APLICAÇÃO) ---
 const formApp = document.getElementById('formAplicacao');
 if(formApp) {
-    formApp.addEventListener('submit', async (e) => {
+    formApp.addEventListener('submit', (e) => {
         e.preventDefault();
-        const btn = formApp.querySelector('button');
-        const txtOriginal = btn.innerText;
-        btn.innerText = "Processando...";
-        btn.disabled = true;
+        
+        const planoSelecionado = document.querySelector('input[name="plano"]:checked')?.value;
 
-        // 1. Coleta os dados
-        const dados = {
-            nome: document.getElementById('appNome').value,
-            whatsapp: document.getElementById('appZap').value,
-            empresa: document.getElementById('appEmpresa').value,
-            segmento: document.getElementById('appSegmento').value,
-            plano_interesse: document.querySelector('input[name="plano"]:checked')?.value,
-            // Faturamento pode ser vazio se for Contador Alpha
-            faturamento: document.querySelector('input[name="faturamento"]:checked')?.value || "", 
-            objetivo: document.getElementById('appObjetivo').value
-        };
-
-        // VALIDAÇÃO INTELIGENTE
-        if (!dados.plano_interesse) {
-            alert('Por favor, selecione um Plano.');
-            btn.innerText = txtOriginal; btn.disabled = false;
+        if (!planoSelecionado) {
+            alert('Por favor, selecione um Plano antes de continuar.');
             return;
         }
 
-        // Se NÃO for Contador Alpha e não tiver faturamento, barra.
-        if (dados.plano_interesse !== 'Contador Alpha' && !dados.faturamento) {
-            alert('Por favor, informe seu Faturamento atual.');
-            btn.innerText = txtOriginal; btn.disabled = false;
-            return;
-        }
-
-        try {
-            // 2. Tenta salvar no Banco de Dados
-            const response = await fetch(`${API_URL}/aplicar`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(dados)
-            });
-
-            if (!response.ok) throw new Error('Erro no servidor');
-
-            // 3. Redirecionamento baseado no plano
-            if (dados.plano_interesse === 'Start') {
-                window.location.href = 'https://pay.kiwify.com.br/xocIUZ4';
-            
-            } else if (dados.plano_interesse === 'Premium') {
-                window.location.href = 'https://pay.kiwify.com.br/QIibNsY';
-            
-            } else if (dados.plano_interesse === 'Contador Alpha') {
-                // Mensagem WhatsApp Formatada
-                const msg = `Olá! Gostaria de marcar uma mentoria em relação ao plano de serviço *Contabilidade Alpha*.%0A%0A` +
-                            `*Meus Dados:*%0A` +
-                            `👤 Nome: ${dados.nome}%0A` +
-                            `🏢 Empresa: ${dados.empresa}%0A` +
-                            `📱 Contato: ${dados.whatsapp}%0A` +
-                            `🎯 Objetivo: ${dados.objetivo}`;
-                
-                window.open(`https://api.whatsapp.com/send?phone=5561995778295&text=${msg}`, '_blank');
-                btn.innerText = "Enviado!";
-            }
-
-        } catch (e) { 
-            console.error(e); 
-            alert('Erro ao processar sua aplicação. Tente novamente ou chame no suporte.');
-            btn.innerText = txtOriginal; 
-            btn.disabled = false;
+        if (planoSelecionado === 'Start') {
+            window.location.href = 'https://pay.kiwify.com.br/xocIUZ4';
+        } else if (planoSelecionado === 'Premium') {
+            window.location.href = 'https://pay.kiwify.com.br/QIibNsY';
+        } else if (planoSelecionado === 'Contador Alpha') {
+            const msg = `Olá! Gostaria de marcar uma mentoria e assinar o plano *Contabilidade Alpha*.`;
+            window.open(`https://api.whatsapp.com/send?phone=5561995778295&text=${msg}`, '_blank');
         }
     });
 }
@@ -388,32 +305,18 @@ async function comprimirImagem(file, maxWidth = 800, maxHeight = 800, quality = 
             const img = new Image();
             img.src = event.target.result;
             img.onload = () => {
-                let width = img.width;
-                let height = img.height;
-
+                let width = img.width; let height = img.height;
                 if (width > height) {
-                    if (width > maxWidth) {
-                        height = Math.round((height * maxWidth) / width);
-                        width = maxWidth;
-                    }
+                    if (width > maxWidth) { height = Math.round((height * maxWidth) / width); width = maxWidth; }
                 } else {
-                    if (height > maxHeight) {
-                        width = Math.round((width * maxHeight) / height);
-                        height = maxHeight;
-                    }
+                    if (height > maxHeight) { width = Math.round((width * maxHeight) / height); height = maxHeight; }
                 }
-
                 const canvas = document.createElement('canvas');
-                canvas.width = width;
-                canvas.height = height;
+                canvas.width = width; canvas.height = height;
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
-
                 canvas.toBlob((blob) => {
-                    const newFile = new File([blob], file.name, {
-                        type: 'image/jpeg',
-                        lastModified: Date.now()
-                    });
+                    const newFile = new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() });
                     resolve(newFile);
                 }, 'image/jpeg', quality);
             };
